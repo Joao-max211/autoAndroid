@@ -3,7 +3,7 @@ from time import time
 
 
 class AutoAndroid:
-    def __init__(self, ip:str='127.0.0.1'):
+    def __init__(self):
         self.width, self.height = self.getWindowSize()
         self.max_x, self.max_y = self.getMaxXY()
 
