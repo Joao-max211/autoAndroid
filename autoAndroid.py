@@ -77,11 +77,3 @@ class AutoAndroid:
             proc.terminate()
             proc.wait()
 
-    #Conectar ao dispositivo
-    def connect(self, ip:str='127.0.0.1'):
-        subprocess.run(['adb', 'connect', ip, ':5555'])
-        return True
-
-    #Desconectar do dispositivo
-    def disconnect(self, ip:str=''):
-        subprocess.run(['adb', 'disconnect', ip])
