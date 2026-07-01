@@ -20,7 +20,7 @@ class AutoAndroid:
         subprocess.run(['adb', 'shell', 'input', 'text', msg])
 
     #Pega as cordenadas de onde o usuario clicou uma ou duas vezes
-    def getXY(self, DoubleClick:bool=False) -> list[int]:
+    def getXY(self, DoubleClick:bool=False, delay:float=0.5) -> list[int]:
         x = y = last_click = 0
         try:
             proc = subprocess.Popen(['adb', 'shell', 'getevent', '-l'], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True)
@@ -32,13 +32,11 @@ class AutoAndroid:
                 if DoubleClick:
                     if 'BTN_TOUCH' in line and 'DOWN' in line:
                         current_click = time()
-                        if current_click - last_click < 0.5:
-                            print('DoubleCLick')
+                        if current_click - last_click < delay:
                             break
                         last_click = current_click
-                else:
-                    if x > 0 and y > 0:
-                        break
+                elif not DoubleClick and x > 0 and y >0:
+                    break
             #Verifica se a coordenadas estao dentro da limite da tela
             if x > self.width and y > self.height:
                 x, y =  map(int, [x / self.max_x * self.width, y / self.max_y * self.height])
